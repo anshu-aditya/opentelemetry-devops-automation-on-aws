@@ -137,7 +137,7 @@ kubectl apply -f otel-collector-config.yaml
 
 ### 4️⃣ Set Up CI/CD Pipeline (GitHub Actions)
 
-GitHub Actions is preconfigured in .github/workflows/ci-cd-pipeline.yml
+GitHub Actions is preconfigured in `.github/workflows/ci-cd-pipeline.yml`
 
 Workflow includes:
 

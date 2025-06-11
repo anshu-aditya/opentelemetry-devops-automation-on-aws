@@ -107,7 +107,7 @@ See `diagrams/architecture-explanation.md` for a detailed breakdown of this diag
 
 ---
 
-## ⚙️ Setup Instructions
+## Setup Instructions
 
 ### 1️⃣ Provision AWS Infrastructure with Terraform
 

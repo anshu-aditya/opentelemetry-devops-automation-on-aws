@@ -109,55 +109,53 @@ See `diagrams/architecture-explanation.md` for a detailed breakdown of this diag
 
 ## ⚙️ Setup Instructions
 
-Follow these steps to deploy the OpenTelemetry Demo microservices application on AWS using Terraform, EKS, GitHub Actions, and OpenTelemetry.
-
----
-
 ### 1️⃣ Provision AWS Infrastructure with Terraform
 
 ```bash
-# Navigate to the Terraform directory
 cd terraform
-
-# Initialize Terraform to download providers and modules
 terraform init
-
-# Apply the infrastructure plan (creates EKS, VPC, IAM, S3, etc.)
 terraform apply
 ```
 
-🧠 This step provisions the core AWS infrastructure:
-
-        - VPC with public/private subnets
-
-        - EKS cluster with worker node group
-
-        - IAM roles and policies
-
-        - CloudWatch Log Groups
-
-        - S3 bucket for storing backups and configs
-
-### 2️⃣ Configure EC2 with Ansible
+### 2️⃣ Deploy Microservices to EKS Cluster
 
 ```bash
-cd ansible
-ansible-playbook -i inventory install-lamp.yml
-ansible-playbook -i inventory deploy-suitecrm.yml
+# Apply Kubernetes manifests (YAMLs) for selected microservices
+cd kubernetes/manifests
+kubectl apply -f frontend-deployment.yaml
+kubectl apply -f checkoutservice-deployment.yaml
+kubectl apply -f ingress.yaml
 ```
 
-### 3️⃣ Setup CI/CD Pipeline
-
-- Use `jenkins/Jenkinsfile` for Jenkins.
-- GitHub Actions option coming soon.
-
-### 4️⃣ Automate Backups to S3
+### 3️⃣ Deploy OpenTelemetry Collector
 
 ```bash
-crontab -e
-# Add the following line:
-0 2 * * * /home/ubuntu/scripts/suitecrm-backup.sh
+# Apply the OpenTelemetry Collector configuration
+cd otel-config
+kubectl apply -f otel-collector-config.yaml
 ```
+
+### 4️⃣ Set Up CI/CD Pipeline (GitHub Actions)
+
+GitHub Actions is preconfigured in .github/workflows/ci-cd-pipeline.yml
+
+    Workflow includes:
+
+    terraform init/plan/apply
+
+    Docker image build & push (optional)
+
+    Kubernetes deployment steps
+
+    Health checks and validation
+
+To activate:
+
+    Push the repo to GitHub
+
+    Ensure secrets like AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, etc., are added to GitHub > Settings > Secrets
+
+    GitHub Actions will run automatically on each push to main
 
 ---
 

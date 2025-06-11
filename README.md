@@ -124,6 +124,7 @@ terraform init
 
 # Apply the infrastructure plan (creates EKS, VPC, IAM, S3, etc.)
 terraform apply
+```
 
 🧠 This step provisions the core AWS infrastructure:
 
@@ -136,7 +137,6 @@ IAM roles and policies
 CloudWatch Log Groups
 
 S3 bucket for storing backups and configs
-```
 
 ### 2️⃣ Configure EC2 with Ansible
 

@@ -139,23 +139,28 @@ kubectl apply -f otel-collector-config.yaml
 
 GitHub Actions is preconfigured in .github/workflows/ci-cd-pipeline.yml
 
-    Workflow includes:
+Workflow includes:
 
-    terraform init/plan/apply
-
-    Docker image build & push (optional)
-
-    Kubernetes deployment steps
-
-    Health checks and validation
+    - `terraform init/plan/apply`.
+    - Docker image build & push (optional).
+    - Kubernetes deployment steps.
+    - Health checks and validation.
 
 To activate:
 
-    Push the repo to GitHub
+    1. Push the repo to GitHub.
+    2. Ensure secrets like `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, etc., are added to GitHub > Settings > Secrets.
+    3. GitHub Actions will run automatically on each push to `main`.
 
-    Ensure secrets like AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, etc., are added to GitHub > Settings > Secrets
+---
 
-    GitHub Actions will run automatically on each push to main
+### 5️⃣ Automate Backups to S3
+
+```bash
+crontab -e
+# Add the following line to run backup script daily at 3 AM
+0 3 * * * /home/ubuntu/scripts/backup-to-s3.sh
+```
 
 ---
 
@@ -187,7 +192,7 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## 👤 Author
 
-**Anshu Aditya**  
+**Anshu Aditya**
 DevOps Engineer | AWS | Python Automation
 
 ---
@@ -200,3 +205,7 @@ DevOps Engineer | AWS | Python Automation
 ---
 
 🗓 Updated: June 09, 2025
+
+```
+
+```

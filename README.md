@@ -113,12 +113,6 @@ Follow these steps to deploy the OpenTelemetry Demo microservices application on
 
 ---
 
-## ⚙️ Setup Instructions
-
-Follow these steps to deploy the OpenTelemetry Demo microservices application on AWS using Terraform, EKS, GitHub Actions, and OpenTelemetry.
-
----
-
 ### 1️⃣ Provision AWS Infrastructure with Terraform
 
 ```bash
@@ -130,6 +124,7 @@ terraform init
 
 # Apply the infrastructure plan (creates EKS, VPC, IAM, S3, etc.)
 terraform apply
+
 🧠 This step provisions the core AWS infrastructure:
 
 VPC with public/private subnets
@@ -141,86 +136,27 @@ IAM roles and policies
 CloudWatch Log Groups
 
 S3 bucket for storing backups and configs
+```
 
-2️⃣ Deploy Microservices to EKS Cluster
-bash
-Copy
-Edit
-# Apply Kubernetes manifests (YAMLs) for selected microservices
-cd kubernetes/manifests
-kubectl apply -f frontend-deployment.yaml
-kubectl apply -f checkoutservice-deployment.yaml
-kubectl apply -f ingress.yaml
-✅ Optionally, deploy using Helm:
+### 2️⃣ Configure EC2 with Ansible
 
-bash
-Copy
-Edit
-cd kubernetes/helm
-helm install otel-demo .
-🧠 This step deploys selected OpenTelemetry demo services to your EKS cluster.
-You can deploy all or a subset of services based on resource availability.
+```bash
+cd ansible
+ansible-playbook -i inventory install-lamp.yml
+ansible-playbook -i inventory deploy-suitecrm.yml
+```
 
-3️⃣ Deploy OpenTelemetry Collector
-bash
-Copy
-Edit
-# Apply the OpenTelemetry Collector configuration
-cd otel-config
-kubectl apply -f otel-collector-config.yaml
-🧠 This sets up the OTEL Collector in Kubernetes to:
+### 3️⃣ Setup CI/CD Pipeline
 
-Receive traces, metrics, and logs from microservices
+- Use `jenkins/Jenkinsfile` for Jenkins.
+- GitHub Actions option coming soon.
 
-Export telemetry to Jaeger, Prometheus, and CloudWatch
+### 4️⃣ Automate Backups to S3
 
-4️⃣ Set Up CI/CD Pipeline (GitHub Actions)
-GitHub Actions is preconfigured in .github/workflows/ci-cd-pipeline.yml
-
-Workflow includes:
-
-terraform init/plan/apply
-
-Docker image build & push (optional)
-
-Kubernetes deployment steps
-
-Health checks and validation
-
-To activate:
-
-Push the repo to GitHub
-
-Ensure secrets like AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, etc., are added to GitHub > Settings > Secrets
-
-GitHub Actions will run automatically on each push to main
-
-5️⃣ Automate Backups to S3
-bash
-Copy
-Edit
-# Open cron editor
+```bash
 crontab -e
-
-# Add the following line to run backup script daily at 3 AM
-0 3 * * * /home/ubuntu/scripts/backup-to-s3.sh
-🧠 The backup-to-s3.sh script backs up:
-
-Kubernetes resource definitions
-
-Helm chart values
-
-Terraform state files (optional)
-
-Application configs or logs
-All are pushed to your S3 bucket with timestamped folders.
-
-✅ Now your complete DevOps pipeline is live — from infra provisioning to app deployment and observability!
-
-
----
-
-
+# Add the following line:
+0 2 * * * /home/ubuntu/scripts/suitecrm-backup.sh
 ```
 
 ---

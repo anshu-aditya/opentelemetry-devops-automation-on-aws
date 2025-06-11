@@ -128,15 +128,15 @@ terraform apply
 
 🧠 This step provisions the core AWS infrastructure:
 
-VPC with public/private subnets
+        - VPC with public/private subnets
 
-EKS cluster with worker node group
+        - EKS cluster with worker node group
 
-IAM roles and policies
+        - IAM roles and policies
 
-CloudWatch Log Groups
+        - CloudWatch Log Groups
 
-S3 bucket for storing backups and configs
+        - S3 bucket for storing backups and configs
 
 ### 2️⃣ Configure EC2 with Ansible
 

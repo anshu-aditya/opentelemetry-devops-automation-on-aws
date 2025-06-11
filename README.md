@@ -205,7 +205,3 @@ DevOps Engineer | AWS | Python Automation
 ---
 
 🗓 Updated: June 09, 2025
-
-```
-
-```

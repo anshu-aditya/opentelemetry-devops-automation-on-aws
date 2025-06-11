@@ -27,7 +27,7 @@ Ideal for DevOps engineers aiming to demonstrate real-world infrastructure autom
 - [Tech Stack](#-tech-stack)
 - [Architecture](#-architecture)
 - [Folder Structure](#-folder-structure)
-- [Setup Instructions](#-setup-instructions)
+- [Setup Instructions](#setup-instructions)
 - [Features](#-features)
 - [Screenshots / Demo](#-screenshots--demo)
 - [License](#-license)
